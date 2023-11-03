@@ -1,6 +1,8 @@
 log_file=/tmp/expense.log
 color="\e[33m"
 
+MySQL_ROOT_PASSWORD=$1
+
 echo -e "${color} Disable NodeJS default Version \e[0m"
 dnf module disable nodejs -y &>>$log_file
  if [ $? -eq 0 ]; then
@@ -97,7 +99,7 @@ dnf install mysql -y &>>$log_file
   fi
 
 echo -e "${color} Load Schema \e[0m"
-mysql -h mysql-dev.antodevops20.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$log_file
+mysql -h mysql-dev.antodevops20.online -uroot -p{MySQL_ROOT_PASSWORD} < /app/schema/backend.sql &>>$log_file
  if [ $? -eq 0 ]; then
     echo -e "\e[32m SUCCESS \e[0m"
   else
