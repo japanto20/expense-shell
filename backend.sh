@@ -33,13 +33,16 @@ cp backend.service /etc/systemd/system/backend.service &>>$log_file
     echo -e "\e[31m FAILURE \e[0m"
   fi
 
-echo -e "${color} Add Application User \e[0m"
-useradd expense &>>$log_file
- if [ $? -eq 0 ]; then
+id expense &>>$log_file
+if [ $? -ne 0 ]; then
+  echo -e "${color} Add Application User \e[0m"
+  useradd expense &>>$log_file
+  if [ $? -eq 0 ]; then
     echo -e "\e[32m SUCCESS \e[0m"
   else
     echo -e "\e[31m FAILURE \e[0m"
   fi
+fi
 
 echo -e "${color} Create Application Directory \e[0m"
 mkdir /app &>>$log_file
